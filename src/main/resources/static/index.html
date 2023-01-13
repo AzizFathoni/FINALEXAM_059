@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Web Service Consume</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    </head>
+    <body>
+        <font size="6">
+        <div>Masukkan Data Diri</div> </font>
+        <hr>
+        <script>
+            //method Input Data (POST) 
+            const url = "http://localhost:8080/exam";
+            function post() {
+                let editID = document.getElementById("id").value;
+                let nik = document.getElementById("nik").value;
+                let nama = document.getElementById("nama").value;
+                let tl = document.getElementById("tl").value;
+                //let ts = document.getElementById("ts").value;
+                let dataText = {"id": editID,"nik": nik, "nama": nama, "tl": tl};
+                let dataJson = JSON.stringify(dataText);
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    data: dataJson,
+                    contentType: 'application/json',
+                    dataType: 'text',
+                    success: function (result) {
+                        document.getElementById("viewer").innerHTML = result;
+                    }
+                });
+            }
+
+            //method Edit Data(PUT)
+            function put() {
+                const urlp = "http://localhost:8080/exam";
+                let editID = document.getElementById("id").value;
+                let nik = document.getElementById("nik").value;
+                let nama = document.getElementById("nama").value;
+                let tl = document.getElementById("tl").value;
+                //let ts = document.getElementById("ts").value;
+                let dataText = {"id": editID,"nik": nik, "nama": nama, "tl": tl};
+                let dataJson = JSON.stringify(dataText);
+                $.ajax({
+                    url: urlp,
+                    method: 'PUT',
+                    data: dataJson,
+                    contentType: 'application/json',
+                    dataType: 'text',
+                    success: function (result) {
+                        document.getElementById("viewer").innerHTML = result;
+                    }
+                });
+            }
+
+            //method Menampilkan Data (GET)
+            function get() {
+                const urlg = "http://localhost:8080/exam";
+                $.ajax({
+                    url: urlg,
+                    method: 'GET',
+                    dataType: 'text',
+                    success: function (result) {
+                        document.getElementById("viewer").innerHTML = result;
+                    }
+                });
+            }
+
+            //method Menghapus Data (DELETE)
+            function delID() {
+                const urlp = "http://localhost:8080/exam";
+                let editID = document.getElementById("id").value;
+                let dataText = {"id": editID};
+                let dataJson = JSON.stringify(dataText);
+                $.ajax({
+                    url: urlp,
+                    method: 'DELETE',
+                    data: dataJson,
+                    contentType: 'application/json',
+                    dataType: 'text',
+                    success: function (result) {
+                        document.getElementById("viewer").innerHTML = result;
+                    }
+                });
+            }
+
+        //membuat Kolom Input dan function Button
+        </script>
+        <label>ID : </Label><td><input type="text" id="id" name="id" ></td> <br><br>
+    <label>NIK: </Label><th><input type="text" id="nik" name="nik"></th> <br><br>
+    <label>Nama: </Label><input type="text" id="nama"name="nama"> <br><br>
+    <label>TL  : </Label><input type="date" id="tl" name="tl"> <br><br>
+    <label>Tambah Foto: </Label><input type="file" id="foto" name="foto">//masih belum bisa mas, jika di tambahkan maka akan failed mas <br> <br>
+        <label>Time Stamp : </label><<input type="datetime-local" id="ts" name="ts">
+        
+        <hr>
+
+        <button onclick ="get()">Tampilkan Data</button> |
+        <button onclick ="post()">Tambah Data</button> |
+        <button onclick ="put()">Edit Data</button> |
+        <button onclick ="delID()">Hapus Data</button>
+        <hr>
+        <div id="viewer"></div>
+    </body>
+</html>
